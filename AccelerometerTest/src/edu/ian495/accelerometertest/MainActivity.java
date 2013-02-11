@@ -1,36 +1,47 @@
 package edu.ian495.accelerometertest;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private long lastUpdate;
 
+    AnimatedView animatedView = null;
+    ShapeDrawable mDrawable = new ShapeDrawable();
+    public static int x;
+    public static int y;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // setContentView(R.layout.activity_main);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         lastUpdate = System.currentTimeMillis();
-        TextView textView = (TextView) findViewById(R.id.textView);
+
+        animatedView = new AnimatedView(this);
+        setContentView(animatedView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer,
-                SensorManager.SENSOR_DELAY_NORMAL);
+                SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
@@ -57,15 +68,33 @@ public class MainActivity extends Activity implements SensorEventListener {
         // TODO Auto-generated method stub
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
-            float[] values = event.values;
-            // Movement
-            float x = values[0];
-            float y = values[1];
-            float z = values[2];
+            x -= (int) event.values[0];
+            y += (int) event.values[1];
 
-            TextView textView = (TextView) findViewById(R.id.textView);
-            textView.setText(Float.toString(x) + " " + Float.toString(y) + " "
-                    + Float.toString(z));
+        }
+    }
+
+    public class AnimatedView extends ImageView {
+
+        static final int width = 50;
+        static final int height = 50;
+
+        public AnimatedView(Context context) {
+            super(context);
+            // TODO Auto-generated constructor stub
+
+            mDrawable = new ShapeDrawable(new OvalShape());
+            mDrawable.getPaint().setColor(0xffffAC23);
+            mDrawable.setBounds(x, y, x + width, y + height);
+
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+
+            mDrawable.setBounds(x, y, x + width, y + height);
+            mDrawable.draw(canvas);
+            invalidate();
         }
     }
 }
