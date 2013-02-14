@@ -1,5 +1,7 @@
 package edu.ian.andenginetest;
 
+import org.andengine.engine.Engine;
+import org.andengine.engine.FixedStepEngine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -55,6 +57,11 @@ public class MainActivity extends SimpleBaseGameActivity {
         mCurrentScene = new Scene();
         mCurrentScene.setBackground(new Background(0.09804f, 0.0274f, 0.8f));
         return mCurrentScene;
+    }
+
+    @Override
+    public Engine onCreateEngine(EngineOptions pEngineOptions) {
+        return new FixedStepEngine(pEngineOptions, 60);
     }
 
     public void setCurrentScene(Scene scene) {
