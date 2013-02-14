@@ -1,5 +1,8 @@
 package edu.ian.andenginetest;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.FixedStepEngine;
 import org.andengine.engine.camera.Camera;
@@ -7,12 +10,18 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.bitmap.BitmapTexture;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.ui.activity.BaseActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.adt.io.in.IInputStreamOpener;
+import org.andengine.util.debug.Debug;
 
 import android.graphics.Typeface;
 
@@ -26,6 +35,8 @@ public class MainActivity extends SimpleBaseGameActivity {
 
     public Scene mCurrentScene;
     public static BaseActivity instance;
+
+    private ITextureRegion mBackgroundTextureRegion;
 
     public static BaseActivity getSharedInstance() {
         return instance;
@@ -48,6 +59,22 @@ public class MainActivity extends SimpleBaseGameActivity {
                 Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
 
         mFont.load();
+
+        try {
+            ITexture backgroundTexture = new BitmapTexture(
+                    this.getTextureManager(), new IInputStreamOpener() {
+                        @Override
+                        public InputStream open() throws IOException {
+                            return getAssets().open("gfx/background.png");
+                        }
+                    });
+            backgroundTexture.load();
+            this.mBackgroundTextureRegion = TextureRegionFactory
+                    .extractFromTexture(backgroundTexture);
+        } catch (IOException e) {
+            Debug.e(e);
+        }
+
     }
 
     @Override
@@ -55,7 +82,10 @@ public class MainActivity extends SimpleBaseGameActivity {
         // TODO Auto-generated method stub
         mEngine.registerUpdateHandler(new FPSLogger());
         mCurrentScene = new Scene();
-        mCurrentScene.setBackground(new Background(0.09804f, 0.0274f, 0.8f));
+        Sprite backgroundSprite = new Sprite(0, 0,
+                this.mBackgroundTextureRegion, getVertexBufferObjectManager());
+        mCurrentScene.attachChild(backgroundSprite);
+        // mCurrentScene.setBackground(new Background(0.09804f, 0.3274f, 0.8f));
         return mCurrentScene;
     }
 
