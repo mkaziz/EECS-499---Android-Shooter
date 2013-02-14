@@ -37,6 +37,7 @@ public class MainActivity extends SimpleBaseGameActivity {
     public static BaseActivity instance;
 
     private ITextureRegion mBackgroundTextureRegion;
+    private ITextureRegion mShipTextureRegion;
 
     public static BaseActivity getSharedInstance() {
         return instance;
@@ -60,21 +61,40 @@ public class MainActivity extends SimpleBaseGameActivity {
 
         mFont.load();
 
+        // try {
+        // ITexture backgroundTexture = new BitmapTexture(
+        // this.getTextureManager(), new IInputStreamOpener() {
+        // @Override
+        // public InputStream open() throws IOException {
+        // return getAssets().open("gfx/background.png");
+        // }
+        // });
+        // backgroundTexture.load();
+        // this.mBackgroundTextureRegion = TextureRegionFactory
+        // .extractFromTexture(backgroundTexture);
+        // } catch (IOException e) {
+        // Debug.e(e);
+        // }
+
+        this.mBackgroundTextureRegion = loadTexture("gfx/background.png");
+        this.mShipTextureRegion = loadTexture("gfx/ship.png");
+    }
+
+    private ITextureRegion loadTexture(final String filename) {
         try {
             ITexture backgroundTexture = new BitmapTexture(
                     this.getTextureManager(), new IInputStreamOpener() {
                         @Override
                         public InputStream open() throws IOException {
-                            return getAssets().open("gfx/background.png");
+                            return getAssets().open(filename);
                         }
                     });
             backgroundTexture.load();
-            this.mBackgroundTextureRegion = TextureRegionFactory
-                    .extractFromTexture(backgroundTexture);
+            return TextureRegionFactory.extractFromTexture(backgroundTexture);
         } catch (IOException e) {
             Debug.e(e);
         }
-
+        return null;
     }
 
     @Override
@@ -85,7 +105,11 @@ public class MainActivity extends SimpleBaseGameActivity {
         Sprite backgroundSprite = new Sprite(0, 0,
                 this.mBackgroundTextureRegion, getVertexBufferObjectManager());
         mCurrentScene.attachChild(backgroundSprite);
-        // mCurrentScene.setBackground(new Background(0.09804f, 0.3274f, 0.8f));
+
+        Sprite shipSprite = new Sprite(0, 0, this.mShipTextureRegion,
+                getVertexBufferObjectManager());
+        mCurrentScene.attachChild(shipSprite);
+
         return mCurrentScene;
     }
 
