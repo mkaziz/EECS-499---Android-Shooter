@@ -50,8 +50,9 @@ public class MainActivity extends SimpleBaseGameActivity {
 
         AssetManager am = AssetManager.getInstance();
 
-        this.mBackgroundTextureRegion = am.loadTexture("gfx/background.png");
-        this.mShipTextureRegion = am.loadTexture("gfx/ship.png");
+        this.mBackgroundTextureRegion = am
+                .getTextureRegion("gfx/background.png");
+        this.mShipTextureRegion = am.getTextureRegion("gfx/ship.png");
     }
 
     @Override
@@ -59,7 +60,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 
         mEngine.registerUpdateHandler(new FPSLogger());
 
-        Scene s = new Scene();
+        BaseScene s = new SplashScene();
         Sprite backgroundSprite = new Sprite(0, 0,
                 this.mBackgroundTextureRegion, getVertexBufferObjectManager());
         s.attachChild(backgroundSprite);

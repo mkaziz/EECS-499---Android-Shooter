@@ -1,14 +1,40 @@
 package edu.ian.andenginetest;
 
-import org.andengine.entity.scene.Scene;
-import org.andengine.ui.activity.BaseActivity;
+import org.andengine.entity.sprite.Sprite;
 
-public class SplashScene extends Scene {
+import edu.ian.andenginetest.SceneManager.SceneType;
 
-    BaseActivity activity;
+public class SplashScene extends BaseScene {
 
-    public SplashScene() {
+    private Sprite splashSprite;
 
+    @Override
+    public void createScene() {
+        AssetManager am = AssetManager.getInstance();
+        splashSprite = new Sprite(0, 0, am.getTextureRegion("splash.png"),
+                mainActivity.getVertexBufferObjectManager());
+        this.attachChild(splashSprite);
+    }
+
+    @Override
+    public void onBackKeyPressed() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void disposeScene() {
+        splashSprite.detachSelf();
+        splashSprite.dispose();
+        this.detachSelf();
+        this.dispose();
+        AssetManager am = AssetManager.getInstance();
+        am.unloadTexture("splash.png");
+    }
+
+    @Override
+    public SceneType getSceneType() {
+        return SceneType.SCENE_SPLASH;
     }
 
 }
