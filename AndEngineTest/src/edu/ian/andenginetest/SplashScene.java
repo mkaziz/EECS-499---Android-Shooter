@@ -8,10 +8,14 @@ public class SplashScene extends BaseScene {
 
     private Sprite splashSprite;
 
+    public SplashScene() {
+        this.createScene();
+    }
+
     @Override
     public void createScene() {
         AssetManager am = AssetManager.getInstance();
-        splashSprite = new Sprite(0, 0, am.getTextureRegion("splash.png"),
+        splashSprite = new Sprite(0, 0, am.getTextureRegion("gfx/splash.png"),
                 mainActivity.getVertexBufferObjectManager());
         this.attachChild(splashSprite);
     }

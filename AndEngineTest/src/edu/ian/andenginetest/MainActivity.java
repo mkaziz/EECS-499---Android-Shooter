@@ -7,7 +7,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -61,13 +60,14 @@ public class MainActivity extends SimpleBaseGameActivity {
         mEngine.registerUpdateHandler(new FPSLogger());
 
         BaseScene s = new SplashScene();
-        Sprite backgroundSprite = new Sprite(0, 0,
-                this.mBackgroundTextureRegion, getVertexBufferObjectManager());
-        s.attachChild(backgroundSprite);
-
-        Sprite shipSprite = new Sprite(0, 0, this.mShipTextureRegion,
-                getVertexBufferObjectManager());
-        s.attachChild(shipSprite);
+        /*
+         * Sprite backgroundSprite = new Sprite(0, 0,
+         * this.mBackgroundTextureRegion, getVertexBufferObjectManager());
+         * s.attachChild(backgroundSprite);
+         * 
+         * Sprite shipSprite = new Sprite(0, 0, this.mShipTextureRegion,
+         * getVertexBufferObjectManager()); s.attachChild(shipSprite);
+         */
 
         SceneManager.getInstance().setCurrentScene(s);
 
