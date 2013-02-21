@@ -13,8 +13,6 @@ import org.andengine.entity.util.FPSLogger;
 import org.andengine.opengl.font.Font;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import android.util.Log;
-
 public class MainActivity extends BaseGameActivity {
 
     static final int CAMERA_WIDTH = 800;
@@ -73,11 +71,12 @@ public class MainActivity extends BaseGameActivity {
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(final TimerHandler pTimerHandler) {
+
                         SceneManager.getInstance().createMenuScene();
-                        Log.e("test", "test9");
+                        // Log.e("test", "test9");
                         mEngine.unregisterUpdateHandler(pTimerHandler);
-                        pTimerHandler.reset();
-                        Log.e("test", "test");
+                        // pTimerHandler.reset();
+                        // Log.e("test", "test");
                     }
                 }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();

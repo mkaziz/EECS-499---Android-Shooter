@@ -79,10 +79,7 @@ public class SplashScene extends BaseScene {
         gameLogoSprite.dispose();
         this.detachSelf();
         this.dispose();
-        // AssetManager am = AssetManager.getInstance();
-        // am.unloadTexture("splash.png");
-        // am.unloadTexture("names.png");
-        // am.unloadTexture("gamelogo.png");
+
     }
 
     @Override

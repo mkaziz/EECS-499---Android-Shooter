@@ -55,11 +55,7 @@ public class SceneManager {
     public void createMenuScene() {
         menuScene = new MainMenuScene();
         setCurrentScene(menuScene);
-        // try {
         disposeSplashScene();
-        // } catch (NullPointerException e) {
-        // Log.e("t", "blah", e);
-        // }
 
     }
 }
