@@ -55,7 +55,7 @@ public class SceneManager {
     public void createMenuScene() {
         menuScene = new MainMenuScene();
         setCurrentScene(menuScene);
-        disposeSplashScene();
+        // disposeSplashScene();
 
     }
 }

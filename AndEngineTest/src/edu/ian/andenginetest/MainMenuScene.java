@@ -3,6 +3,8 @@ package edu.ian.andenginetest;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.SpriteMenuItem;
+import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
@@ -39,43 +41,41 @@ public class MainMenuScene extends BaseScene implements
 
         gameLogoSprite = new Sprite(MainActivity.CAMERA_WIDTH / 2
                 - gameLogoTr.getWidth() / 2,
-                (MainActivity.CAMERA_HEIGHT / 2 - gameLogoTr.getHeight()),
+                (MainActivity.CAMERA_HEIGHT / 3 - gameLogoTr.getHeight()),
                 gameLogoTr, mainActivity.getVertexBufferObjectManager());
         this.attachChild(gameLogoSprite);
     }
 
     private void createMenuChildScene() {
         menuChildScene = new MenuScene();
+        menuChildScene.setCamera(mainActivity.mCamera);
         menuChildScene.setPosition(MainActivity.CAMERA_WIDTH / 4,
-                MainActivity.CAMERA_HEIGHT / 4);
+                MainActivity.CAMERA_HEIGHT / 2);
 
-        // AssetManager am = AssetManager.getInstance();
-        //
-        // ITextureRegion playButtonTr = am.getTextureRegion("gfx/play.png");
-        // ITextureRegion optionsButtonTr =
-        // am.getTextureRegion("gfx/options.png");
-        //
-        // IMenuItem playItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
-        // MENU_PLAY, playButtonTr,
-        // mainActivity.getVertexBufferObjectManager()), 1.2f, 1);
-        // IMenuItem optionsItem = new ScaleMenuItemDecorator(new
-        // SpriteMenuItem(
-        // MENU_OPTIONS, optionsButtonTr,
-        // mainActivity.getVertexBufferObjectManager()), 1.2f, 1);
+        AssetManager am = AssetManager.getInstance();
 
-        // menuChildScene.addMenuItem(playItem);
-        // menuChildScene.addMenuItem(optionsItem);
-        //
-        // menuChildScene.buildAnimations();
-        // menuChildScene.setBackgroundEnabled(false);
-        //
-        // playItem.setPosition(playItem.getX(), playItem.getY() - 20);
-        // optionsItem.setPosition(optionsItem.getX(), optionsItem.getY() +
-        // 120);
-        //
-        // menuChildScene.setOnMenuItemClickListener(this);
+        ITextureRegion playButtonTr = am.getTextureRegion("gfx/play.png");
+        ITextureRegion optionsButtonTr = am.getTextureRegion("gfx/options.png");
 
-        // this.attachChild(menuChildScene);
+        IMenuItem playItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_PLAY, playButtonTr,
+                mainActivity.getVertexBufferObjectManager()), 1.2f, 1);
+        IMenuItem optionsItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_OPTIONS, optionsButtonTr,
+                mainActivity.getVertexBufferObjectManager()), 1.2f, 1);
+
+        menuChildScene.addMenuItem(playItem);
+        menuChildScene.addMenuItem(optionsItem);
+
+        menuChildScene.buildAnimations();
+        menuChildScene.setBackgroundEnabled(false);
+
+        playItem.setPosition(0, 0);
+        optionsItem.setPosition(0, playItem.getY() + playItem.getHeight() + 10);
+
+        menuChildScene.setOnMenuItemClickListener(this);
+
+        this.setChildScene(menuChildScene);
 
     }
 
