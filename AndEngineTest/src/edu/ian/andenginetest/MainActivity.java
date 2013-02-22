@@ -13,6 +13,8 @@ import org.andengine.entity.util.FPSLogger;
 import org.andengine.opengl.font.Font;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.view.KeyEvent;
+
 public class MainActivity extends BaseGameActivity {
 
     static final int CAMERA_WIDTH = 800;
@@ -82,4 +84,20 @@ public class MainActivity extends BaseGameActivity {
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.exit(0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent ky) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
+        }
+
+        return false;
+
+    }
 }

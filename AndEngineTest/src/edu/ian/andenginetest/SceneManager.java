@@ -1,6 +1,5 @@
 package edu.ian.andenginetest;
 
-import org.andengine.entity.scene.Scene;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 public class SceneManager {
@@ -28,7 +27,7 @@ public class SceneManager {
         return instance;
     }
 
-    public Scene getCurrentScene() {
+    public BaseScene getCurrentScene() {
         return currentScene;
     }
 

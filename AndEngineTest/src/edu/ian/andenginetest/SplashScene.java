@@ -64,8 +64,6 @@ public class SplashScene extends BaseScene {
 
     @Override
     public void onBackKeyPressed() {
-        // this.disposeScene();
-        // System.exit(0);
 
     }
 
