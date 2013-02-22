@@ -8,7 +8,7 @@ public class SceneManager {
     private MainActivity mainActivity;
     private BaseScene currentScene;
 
-    private BaseScene splashScene;
+    public BaseScene splashScene;
     private BaseScene menuScene;
     private BaseScene gameScene;
 
@@ -43,7 +43,6 @@ public class SceneManager {
     public void createSplashScene(OnCreateSceneCallback pOnCreateSceneCallback) {
         splashScene = new SplashScene();
         setCurrentScene(splashScene);
-        pOnCreateSceneCallback.onCreateSceneFinished(currentScene);
     }
 
     private void disposeSplashScene() {
@@ -54,7 +53,7 @@ public class SceneManager {
     public void createMenuScene() {
         menuScene = new MainMenuScene();
         setCurrentScene(menuScene);
-        // disposeSplashScene();
+        disposeSplashScene();
 
     }
 }

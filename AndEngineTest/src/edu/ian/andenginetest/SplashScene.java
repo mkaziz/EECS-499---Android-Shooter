@@ -15,6 +15,7 @@ public class SplashScene extends BaseScene {
 
     public SplashScene() {
         this.createScene();
+
     }
 
     private void createBackground() {

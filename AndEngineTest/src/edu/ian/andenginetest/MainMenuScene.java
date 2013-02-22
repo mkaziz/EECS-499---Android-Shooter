@@ -95,7 +95,12 @@ public class MainMenuScene extends BaseScene implements
 
     @Override
     public void disposeScene() {
-        // TODO Auto-generated method stub
+        backgroundSprite.detachSelf();
+        backgroundSprite.dispose();
+        gameLogoSprite.detachSelf();
+        gameLogoSprite.dispose();
+        menuChildScene.detachSelf();
+        menuChildScene.dispose();
 
     }
 
@@ -111,6 +116,8 @@ public class MainMenuScene extends BaseScene implements
 
         switch (pMenuItem.getID()) {
         case MENU_PLAY:
+            // SceneManager.getInstance().setCurrentScene(
+            // SceneManager.getInstance().splashScene);
             return true;
         case MENU_OPTIONS:
             return true;
