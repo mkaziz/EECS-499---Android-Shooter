@@ -1,22 +1,33 @@
 package edu.ian.andenginetest;
 
+import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
+import com.badlogic.gdx.math.Vector2;
+
 import edu.ian.andenginetest.SceneManager.SceneType;
 
 public class GameScene extends BaseScene implements SensorEventListener {
 
     private Sprite backgroundSprite;
     private Sprite shipSprite;
+
+    private HUD gameHud;
+    private PhysicsWorld physicsWorld;
+
     SensorManager sensorManager;
     Sensor accelerometer;
 
     public GameScene() {
         this.createScene();
+
         sensorManager = (SensorManager) mainActivity
                 .getSystemService(mainActivity.SENSOR_SERVICE);
         accelerometer = sensorManager
@@ -42,23 +53,32 @@ public class GameScene extends BaseScene implements SensorEventListener {
         this.attachChild(shipSprite);
     }
 
+    private void createPhysics() {
+        physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -10), false);
+        registerUpdateHandler(physicsWorld);
+    }
+
     @Override
     public void createScene() {
 
         createBackground();
         createShip();
+        createPhysics();
 
     }
 
     @Override
     public void onBackKeyPressed() {
-        // TODO Auto-generated method stub
-
+        this.disposeScene();
+        SceneManager.getInstance().createMenuScene();
     }
 
     @Override
     public void disposeScene() {
-        // TODO Auto-generated method stub
+        backgroundSprite.detachSelf();
+        backgroundSprite.dispose();
+        shipSprite.detachSelf();
+        shipSprite.dispose();
 
     }
 

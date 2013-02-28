@@ -45,27 +45,17 @@ public class SceneManager {
         setCurrentScene(splashScene);
     }
 
-    private void disposeSplashScene() {
-        splashScene.disposeScene();
-        splashScene = null;
-    }
-
     public void createMenuScene() {
         menuScene = new MainMenuScene();
         setCurrentScene(menuScene);
-        disposeSplashScene();
-
-    }
-
-    public void disposeMenuScene() {
-        menuScene.disposeScene();
-        menuScene = null;
-
+        gameScene = null;
+        splashScene = null;
     }
 
     public void createGameScene() {
         gameScene = new GameScene();
         setCurrentScene(gameScene);
-        disposeMenuScene();
+        menuScene = null;
     }
+
 }

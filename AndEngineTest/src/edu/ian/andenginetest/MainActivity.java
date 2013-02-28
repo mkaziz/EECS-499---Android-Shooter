@@ -36,7 +36,7 @@ public class MainActivity extends BaseGameActivity {
         EngineOptions eo = new EngineOptions(true,
                 ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
                         CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
-        // eo.setEngineLock(EngineLock.this)
+
         return eo;
     }
 
@@ -73,6 +73,7 @@ public class MainActivity extends BaseGameActivity {
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(final TimerHandler pTimerHandler) {
+                        SceneManager.getInstance().splashScene.disposeScene();
                         SceneManager.getInstance().createMenuScene();
                         mEngine.unregisterUpdateHandler(pTimerHandler);
                     }
