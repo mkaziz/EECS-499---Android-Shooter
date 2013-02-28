@@ -8,9 +8,9 @@ public class SceneManager {
     private MainActivity mainActivity;
     private BaseScene currentScene;
 
-    public BaseScene splashScene;
-    private BaseScene menuScene;
-    private BaseScene gameScene;
+    protected BaseScene splashScene;
+    protected BaseScene menuScene;
+    protected BaseScene gameScene;
 
     public enum SceneType {
         SCENE_SPLASH, SCENE_MENU, SCENE_GAME, SCENE_LOADING
@@ -55,5 +55,17 @@ public class SceneManager {
         setCurrentScene(menuScene);
         disposeSplashScene();
 
+    }
+
+    public void disposeMenuScene() {
+        menuScene.disposeScene();
+        menuScene = null;
+
+    }
+
+    public void createGameScene() {
+        gameScene = new GameScene();
+        setCurrentScene(gameScene);
+        disposeMenuScene();
     }
 }

@@ -34,7 +34,7 @@ public class MainActivity extends BaseGameActivity {
         instance = this;
         mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         EngineOptions eo = new EngineOptions(true,
-                ScreenOrientation.LANDSCAPE_SENSOR, new RatioResolutionPolicy(
+                ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(
                         CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
         // eo.setEngineLock(EngineLock.this)
         return eo;

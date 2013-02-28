@@ -116,8 +116,7 @@ public class MainMenuScene extends BaseScene implements
 
         switch (pMenuItem.getID()) {
         case MENU_PLAY:
-            // SceneManager.getInstance().setCurrentScene(
-            // SceneManager.getInstance().splashScene);
+            SceneManager.getInstance().createGameScene();
             return true;
         case MENU_OPTIONS:
             return true;
