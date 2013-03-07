@@ -1,6 +1,7 @@
 package edu.ian.andenginetest;
 
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -64,6 +65,25 @@ public class GameScene extends BaseScene implements SensorEventListener {
                 BodyType.DynamicBody, PhysicsFactory.createFixtureDef(0, 0, 1));
         ship.setUserData(ship);
         ship.setFixedRotation(true);
+
+        Line line_bottom = new Line(0, MainActivity.CAMERA_HEIGHT,
+                MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
+                mainActivity.getVertexBufferObjectManager());
+        Line line_left = new Line(0, 0, 0, MainActivity.CAMERA_HEIGHT,
+                mainActivity.getVertexBufferObjectManager());
+        Line line_right = new Line(MainActivity.CAMERA_WIDTH, 0,
+                MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
+                mainActivity.getVertexBufferObjectManager());
+        PhysicsFactory.createLineBody(physicsWorld, line_bottom,
+                PhysicsFactory.createFixtureDef(0, 0, 0));
+        PhysicsFactory.createLineBody(physicsWorld, line_left,
+                PhysicsFactory.createFixtureDef(0, 0, 0));
+        PhysicsFactory.createLineBody(physicsWorld, line_right,
+                PhysicsFactory.createFixtureDef(0, 0, 0));
+
+        // this.physicsWorld.registerPhysicsConnector(new
+        // PhysicsConnector(line_bottom, wall_bottom, true, true));
+        this.attachChild(line_bottom);
 
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(shipSprite,
                 ship, true, false) {
