@@ -1,7 +1,6 @@
 package edu.ian.andenginetest;
 
 import org.andengine.engine.camera.hud.HUD;
-import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -66,24 +65,23 @@ public class GameScene extends BaseScene implements SensorEventListener {
         ship.setUserData(ship);
         ship.setFixedRotation(true);
 
-        Line line_bottom = new Line(0, MainActivity.CAMERA_HEIGHT,
-                MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
-                mainActivity.getVertexBufferObjectManager());
-        Line line_left = new Line(0, 0, 0, MainActivity.CAMERA_HEIGHT,
-                mainActivity.getVertexBufferObjectManager());
-        Line line_right = new Line(MainActivity.CAMERA_WIDTH, 0,
-                MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
-                mainActivity.getVertexBufferObjectManager());
-        PhysicsFactory.createLineBody(physicsWorld, line_bottom,
-                PhysicsFactory.createFixtureDef(0, 0, 0));
-        PhysicsFactory.createLineBody(physicsWorld, line_left,
-                PhysicsFactory.createFixtureDef(0, 0, 0));
-        PhysicsFactory.createLineBody(physicsWorld, line_right,
-                PhysicsFactory.createFixtureDef(0, 0, 0));
+        // Line line_bottom = new Line(0, MainActivity.CAMERA_HEIGHT,
+        // MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
+        // mainActivity.getVertexBufferObjectManager());
+        // Line line_left = new Line(0, 0, 0, MainActivity.CAMERA_HEIGHT,
+        // mainActivity.getVertexBufferObjectManager());
+        // Line line_right = new Line(MainActivity.CAMERA_WIDTH, 0,
+        // MainActivity.CAMERA_WIDTH, MainActivity.CAMERA_HEIGHT,
+        // mainActivity.getVertexBufferObjectManager());
+        // PhysicsFactory.createLineBody(physicsWorld, line_bottom,
+        // PhysicsFactory.createFixtureDef(0, 0, 0));
+        // PhysicsFactory.createLineBody(physicsWorld, line_left,
+        // PhysicsFactory.createFixtureDef(0, 0, 0));
+        // PhysicsFactory.createLineBody(physicsWorld, line_right,
+        // PhysicsFactory.createFixtureDef(0, 0, 0));
 
         // this.physicsWorld.registerPhysicsConnector(new
         // PhysicsConnector(line_bottom, wall_bottom, true, true));
-        this.attachChild(line_bottom);
 
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(shipSprite,
                 ship, true, false) {
@@ -95,6 +93,7 @@ public class GameScene extends BaseScene implements SensorEventListener {
 
                 ship.setLinearDamping(10.0f);
                 // ship.applyForce(currentAcceleration, new Vector2(0, 0));
+
                 ship.setLinearVelocity(currentAcceleration);
 
             }
@@ -162,6 +161,15 @@ public class GameScene extends BaseScene implements SensorEventListener {
             // }
             currentAcceleration.set(event.values[1], event.values[0])
                     .mul(1.75f);
+
+            if (shipSprite.getX() + shipSprite.getWidth() > MainActivity.CAMERA_WIDTH)
+                currentAcceleration.set(-10f, currentAcceleration.y);
+            else if (shipSprite.getX() < 0)
+                currentAcceleration.set(10f, currentAcceleration.y);
+            else if (shipSprite.getY() < MainActivity.CAMERA_HEIGHT / 3)
+                currentAcceleration.set(currentAcceleration.x, 10f);
+            else if (shipSprite.getY() + shipSprite.getHeight() > MainActivity.CAMERA_HEIGHT)
+                currentAcceleration.set(currentAcceleration.x, -10f);
             //
             // if (newX > shipSprite.getWidth()
             // || newX < mainActivity.CAMERA_WIDTH - shipSprite.getWidth())
